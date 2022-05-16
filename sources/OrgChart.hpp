@@ -7,12 +7,26 @@
 
 #include <iostream>
 #include <iterator>
+#include <utility>
+#include <vector>
 
 namespace ariel {
     class OrgChart {
     private:
         class Node {
-            Node() = default;;
+        private:
+            std::string title;
+            Node* parent;
+            std::vector<Node> subs;
+            int _size;
+
+        public:
+            Node(std::string  title, Node& parent):title(std::move(title)), parent(&parent), _size(0) {}
+
+        public:
+            friend std::ostream & operator<< (std::ostream &ostream, Node& node);
+
+            int size();
         };
 
     private:
@@ -45,6 +59,8 @@ namespace ariel {
 
             bool operator==(const LevelOrder& other);
             bool operator!=(const LevelOrder& other);
+
+
         };
 
 
@@ -65,8 +81,9 @@ namespace ariel {
             ReverseLevelOrder& operator++();
             const ReverseLevelOrder operator++(int );
 
-            bool operator==(const LevelOrder& other);
-            bool operator!=(const LevelOrder& other);
+            bool operator==(const ReverseLevelOrder& other);
+            bool operator!=(const ReverseLevelOrder& other);
+
         };
 
         /* PRE ORDER CLASS */
@@ -85,8 +102,9 @@ namespace ariel {
             PreOrder& operator++();
             const PreOrder operator++(int );
 
-            bool operator==(const LevelOrder& other);
-            bool operator!=(const LevelOrder& other);
+            bool operator==(const PreOrder& other);
+            bool operator!=(const PreOrder& other);
+
         };
         /** Iterator Methods */
 
@@ -94,6 +112,9 @@ namespace ariel {
         LevelOrder begin_level_order();
 
         LevelOrder end_level_order();
+
+        LevelOrder begin();
+        LevelOrder end();
 
         /* REVERSE LEVEL ORDER */
         ReverseLevelOrder begin_reverse_order();
@@ -104,6 +125,9 @@ namespace ariel {
         PreOrder begin_preorder();
 
         PreOrder end_preorder();
+
+
+        friend std::ostream & operator<< (std::ostream &ostream, OrgChart& node);
 
     };
 }
