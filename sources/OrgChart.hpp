@@ -23,7 +23,6 @@ namespace ariel {
         public:
             Node(std::string  title, Node& parent):title(std::move(title)), parent(&parent), _size(0) {}
 
-        public:
             friend std::ostream & operator<< (std::ostream &ostream, Node& node);
 
             int size();
