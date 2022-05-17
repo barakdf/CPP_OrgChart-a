@@ -26,42 +26,43 @@ OrgChart &OrgChart::add_sub(const std::string& curr_title, const std::string& ne
     Node child{new_title, parent->get_num_childs()};
     this->members.insert({new_title, child});
     this->members.at(curr_title).add_child(&this->members.at(new_title));
+    return *this;
 }
 
 auto OrgChart::get_members() {
     return &(this->members);
 }
 
-OrgChart::LevelOrder OrgChart::begin_level_order() {
-    return OrgChart::LevelOrder{this->root};
+LevelOrder OrgChart::begin_level_order() {
+    return LevelOrder{this->root};
 }
 
-OrgChart::LevelOrder OrgChart::end_level_order() {
-    return OrgChart::LevelOrder{nullptr};
+LevelOrder OrgChart::end_level_order() {
+    return LevelOrder{nullptr};
 }
 
-OrgChart::LevelOrder OrgChart::begin() {
+LevelOrder OrgChart::begin() {
     return this->begin_level_order();
 }
 
-OrgChart::LevelOrder OrgChart::end() {
+LevelOrder OrgChart::end() {
     return this->end_level_order();
 }
 
-OrgChart::ReverseLevelOrder OrgChart::begin_reverse_order() {
-    return OrgChart::ReverseLevelOrder{};
+ReverseLevelOrder OrgChart::begin_reverse_order() {
+    return ReverseLevelOrder{this->root};
 }
 
-OrgChart::ReverseLevelOrder OrgChart::end_reverse_order() {
-    return OrgChart::ReverseLevelOrder{nullptr};
+ReverseLevelOrder OrgChart::end_reverse_order() {
+    return ReverseLevelOrder{nullptr};
 }
 
-OrgChart::PreOrder OrgChart::begin_preorder() {
-    return OrgChart::PreOrder{this->root};
+PreOrder OrgChart::begin_preorder() {
+    return PreOrder{this->root};
 }
 
-OrgChart::PreOrder OrgChart::end_preorder() {
-    return OrgChart::PreOrder{nullptr};
+PreOrder OrgChart::end_preorder() {
+    return PreOrder{nullptr};
 }
 
 std::ostream &ariel::operator<<(std::ostream &ostream, OrgChart &orgChart) {
@@ -100,7 +101,7 @@ int OrgChart::Node::size() {
 
 /** Basic Iterator Parent Class */
 
-OrgChart::Iterator &OrgChart::Iterator::operator=(const OrgChart::Iterator &other) = default;
+//OrgChart::Iterator &OrgChart::Iterator::operator=(const OrgChart::Iterator &other) = default;
 
 OrgChart::Node &OrgChart::Iterator::operator*() const {
     return *(this->pointer_to_current_node);
@@ -108,6 +109,16 @@ OrgChart::Node &OrgChart::Iterator::operator*() const {
 
 OrgChart::Node *OrgChart::Iterator::operator->() const {
     return this->pointer_to_current_node;
+}
+
+/* Boolean */
+//TODO
+bool OrgChart::Iterator::operator==(const OrgChart::Iterator &other) {
+    return false;
+}
+//TODO
+bool OrgChart::Iterator::operator!=(const OrgChart::Iterator &other) {
+    return false;
 }
 
 
@@ -118,51 +129,33 @@ OrgChart::Node *OrgChart::Iterator::operator->() const {
 
 /* Prefix */
 //TODO
-const OrgChart::LevelOrder OrgChart::LevelOrder::operator++(int) {
-    return OrgChart::LevelOrder();
+const LevelOrder LevelOrder::operator++(int) {
+    return *this;
 }
 
 /* Postfix */
 //TODO
-OrgChart::LevelOrder &OrgChart::LevelOrder::operator++() {
+LevelOrder &LevelOrder::operator++() {
     return *this;
 }
 
-/* Boolean */
-//TODO
-bool OrgChart::LevelOrder::operator==(const OrgChart::LevelOrder &other) {
-    return false;
-}
-//TODO
-bool OrgChart::LevelOrder::operator!=(const OrgChart::LevelOrder &other) {
-    return false;
-}
+
 
 /** ReverseLevelOrder */
 
 
 /* Prefix */
 //TODO
-OrgChart::ReverseLevelOrder &OrgChart::ReverseLevelOrder::operator++() {
+ReverseLevelOrder &ReverseLevelOrder::operator++() {
     return *this;
 }
 
 /* Postfix */
 //TODO
-const OrgChart::ReverseLevelOrder OrgChart::ReverseLevelOrder::operator++(int) {
-    return OrgChart::ReverseLevelOrder();
+const ReverseLevelOrder ReverseLevelOrder::operator++(int) {
+    return *this;
 }
 
-
-/* Boolean */
-//TODO
-bool OrgChart::ReverseLevelOrder::operator==(const OrgChart::ReverseLevelOrder &other) {
-    return false;
-}
-//TODO
-bool OrgChart::ReverseLevelOrder::operator!=(const OrgChart::ReverseLevelOrder &other) {
-    return false;
-}
 
 
 
@@ -171,25 +164,15 @@ bool OrgChart::ReverseLevelOrder::operator!=(const OrgChart::ReverseLevelOrder &
 
 /* Prefix */
 //TODO
-OrgChart::PreOrder &OrgChart::PreOrder::operator++() {
+PreOrder &PreOrder::operator++() {
     return *this;
 }
 
 /* Postfix */
 //TODO
-const OrgChart::PreOrder OrgChart::PreOrder::operator++(int) {
-    return OrgChart::PreOrder();
+const PreOrder PreOrder::operator++(int) {
+    return *this;
 }
 
-
-/* Boolean */
-//TODO
-bool OrgChart::PreOrder::operator==(const OrgChart::PreOrder &other) {
-    return false;
-}
-//TODO
-bool OrgChart::PreOrder::operator!=(const OrgChart::PreOrder &other) {
-    return false;
-}
 
 

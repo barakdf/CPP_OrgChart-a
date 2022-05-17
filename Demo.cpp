@@ -12,7 +12,7 @@
 using namespace std;
 
 #include "sources/OrgChart.hpp"
-#include "sources/OrgChart.cpp"
+//#include "sources/OrgChart.cpp"
 using namespace ariel;
 
 int main() {
@@ -52,6 +52,6 @@ int main() {
   // demonstrate the arrow operator:
   for (auto it = organization.begin_level_order(); it != organization.end_level_order(); ++it)
   {
-    cout << it->get_num_childs() << " " ;
+    cout << it->size() << " " ;
   } // prints: 3 3 3 3 5 5
 }

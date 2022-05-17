@@ -12,9 +12,15 @@
 #include <unordered_map>
 
 namespace ariel {
+   class LevelOrder;
+   class ReverseLevelOrder;
+   class PreOrder;
+
     class OrgChart {
 
     public:
+        friend class LevelOrder;
+        friend class PreOrder;
         class Node {
         private:
             std::string title;
@@ -40,10 +46,10 @@ namespace ariel {
     private:
         Node *root;
 
-    public:
-
-
         std::unordered_map<std::string, Node> members;
+
+
+    public:
         OrgChart() : root(nullptr) {}
 
         OrgChart &add_root(const std::string& title);
@@ -61,61 +67,26 @@ namespace ariel {
         /** Basic Iterator Parent Class */
 
         class Iterator {
-        protected:
+        private:
             Node *pointer_to_current_node;
         public:
-            explicit Iterator(Node *ptr = nullptr): pointer_to_current_node(ptr){}
+            Iterator(Node *ptr = nullptr): pointer_to_current_node(ptr){}
 
-            Iterator &operator=(const Iterator &);
-            Node & operator*() const;
-//            Node & operator&() const;
+//            Iterator &operator=(const Iterator &);
+
+            //            Node & operator&() const;
             Node * operator->() const;
+            Node & operator*() const;
 
-        };
-        /* LEVEL ORDER CLASS */
-        class LevelOrder: Iterator {
-        public:
-            explicit LevelOrder(Node *ptr = nullptr)
-                    : Iterator(ptr) {}
-
-            LevelOrder& operator++();
-            const LevelOrder operator++(int );
-
-            bool operator==(const LevelOrder& other);
-            bool operator!=(const LevelOrder& other);
-
-
+            bool operator==(const Iterator& other);
+            bool operator!=(const Iterator& other);
         };
 
 
-        /* REVERSE LEVEL ORDER CLASS */
-        class ReverseLevelOrder:Iterator {
-        public:
-            explicit ReverseLevelOrder(Node *ptr = nullptr)
-                    : Iterator(ptr) {}
 
-            ReverseLevelOrder& operator++();
-            const ReverseLevelOrder operator++(int );
 
-            bool operator==(const ReverseLevelOrder& other);
-            bool operator!=(const ReverseLevelOrder& other);
 
-        };
 
-        /* PRE ORDER CLASS */
-        class PreOrder:Iterator {
-
-        public:
-            explicit PreOrder(Node *ptr = nullptr)
-                    : Iterator(ptr) {}
-
-            PreOrder& operator++();
-            const PreOrder operator++(int );
-
-            bool operator==(const PreOrder& other);
-            bool operator!=(const PreOrder& other);
-
-        };
         /** Iterator Methods */
 
         /* LEVEL ORDER */
@@ -140,6 +111,46 @@ namespace ariel {
         friend std::ostream & operator<< (std::ostream &ostream, OrgChart& orgChart);
 
     };
+
+    /* LEVEL ORDER CLASS */
+    class LevelOrder: public OrgChart::Iterator {
+    public:
+        explicit LevelOrder(OrgChart::Node *ptr = nullptr)
+                : Iterator(ptr) {}
+
+        LevelOrder& operator++();
+        const LevelOrder operator++(int );
+
+    };
+
+
+    /* REVERSE LEVEL ORDER CLASS */
+    class ReverseLevelOrder:public OrgChart::Iterator {
+    public:
+        explicit ReverseLevelOrder(OrgChart::Node *ptr = nullptr)
+                : Iterator(ptr) {}
+
+        ReverseLevelOrder& operator++();
+        const ReverseLevelOrder operator++(int );
+
+
+    };
+
+
+    /* PRE ORDER CLASS */
+    class PreOrder:public OrgChart::Iterator {
+
+    public:
+        explicit PreOrder(OrgChart::Node *ptr = nullptr)
+                : Iterator(ptr) {}
+
+        PreOrder& operator++();
+        const PreOrder operator++(int );
+
+
+
+    };
+
 }
 
 
