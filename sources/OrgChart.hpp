@@ -13,7 +13,8 @@
 
 namespace ariel {
     class OrgChart {
-    private:
+
+    public:
         class Node {
         private:
             std::string title;
@@ -25,9 +26,11 @@ namespace ariel {
         public:
             Node(std::string  title, size_t _index):title(std::move(title)), parent(nullptr), _size(0), index(_index){}
 
-            void add_child(const std::string& new_child_title);
+            void add_child(Node* child);
 
             void set_title(std::string _title);
+
+            size_t get_num_childs();
 
             int size();
 
@@ -52,7 +55,7 @@ namespace ariel {
 
 
 
-        /** Iterator Classes */
+        /** -------------- Iterator Classes */
 
         /* LEVEL ORDER CLASS */
         class LevelOrder {
@@ -62,7 +65,7 @@ namespace ariel {
             explicit LevelOrder(Node *ptr = nullptr)
                     : pointer_to_current_node(ptr) {}
 
-            Node &operator=(Node &);
+            LevelOrder &operator=(const LevelOrder &);
             Node & operator*() const;
             Node * operator&() const;
             Node * operator->() const;
@@ -86,7 +89,7 @@ namespace ariel {
             explicit ReverseLevelOrder(Node *ptr = nullptr)
                     : pointer_to_current_node(ptr) {}
 
-            Node &operator=(Node &);
+            ReverseLevelOrder &operator=(ReverseLevelOrder &);
             Node & operator*() const;
             Node * operator&() const;
             Node * operator->() const;
@@ -108,7 +111,7 @@ namespace ariel {
             explicit PreOrder(Node *ptr = nullptr)
                     : pointer_to_current_node(ptr) {}
 
-            Node &operator=(Node &);
+            PreOrder &operator=(Node &);
             Node & operator*() const;
             Node * operator&() const;
             Node * operator->() const;
@@ -141,7 +144,7 @@ namespace ariel {
         PreOrder end_preorder();
 
 
-        friend std::ostream & operator<< (std::ostream &ostream, OrgChart& node);
+        friend std::ostream & operator<< (std::ostream &ostream, OrgChart& orgChart);
 
     };
 }

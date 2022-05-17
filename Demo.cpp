@@ -52,6 +52,6 @@ int main() {
   // demonstrate the arrow operator:
   for (auto it = organization.begin_level_order(); it != organization.end_level_order(); ++it)
   {
-    cout << it->size() << " " ;
+    cout << it->get_num_childs() << " " ;
   } // prints: 3 3 3 3 5 5
 }

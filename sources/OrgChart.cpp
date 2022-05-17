@@ -19,8 +19,13 @@ OrgChart &OrgChart::add_root(const std::string& title) {
 }
 
 OrgChart &OrgChart::add_sub(const std::string& curr_title, const std::string& new_title) {
+    if (this->members.find(curr_title) == this->members.end()) {
+    }
 
-    this->members.at(curr_title).add_child(new_title);
+    Node *parent = &(members.at(curr_title));
+    Node child{new_title, parent->get_num_childs()};
+    this->members.insert({new_title, child});
+    this->members.at(curr_title).add_child(&this->members.at(new_title));
 }
 
 auto OrgChart::get_members() {
@@ -28,48 +33,58 @@ auto OrgChart::get_members() {
 }
 
 OrgChart::LevelOrder OrgChart::begin_level_order() {
-    return OrgChart::LevelOrder{root};
+    return OrgChart::LevelOrder{this->root};
 }
 
 OrgChart::LevelOrder OrgChart::end_level_order() {
-    return OrgChart::LevelOrder();
+    return OrgChart::LevelOrder{nullptr};
 }
 
 OrgChart::LevelOrder OrgChart::begin() {
-    return OrgChart::LevelOrder();
+    return this->begin_level_order();
 }
 
 OrgChart::LevelOrder OrgChart::end() {
-    return OrgChart::LevelOrder();
+    return this->end_level_order();
 }
 
 OrgChart::ReverseLevelOrder OrgChart::begin_reverse_order() {
-    return OrgChart::ReverseLevelOrder();
+    return OrgChart::ReverseLevelOrder{};
 }
 
 OrgChart::ReverseLevelOrder OrgChart::end_reverse_order() {
-    return OrgChart::ReverseLevelOrder();
+    return OrgChart::ReverseLevelOrder{nullptr};
 }
 
 OrgChart::PreOrder OrgChart::begin_preorder() {
-    return OrgChart::PreOrder();
+    return OrgChart::PreOrder{this->root};
 }
 
 OrgChart::PreOrder OrgChart::end_preorder() {
-    return OrgChart::PreOrder();
+    return OrgChart::PreOrder{nullptr};
 }
 
-/** Node Class */
-int OrgChart::Node::size() {
+std::ostream &ariel::operator<<(std::ostream &ostream, OrgChart &orgChart) {
+    ostream << "hi";
+    return ostream;
+}
+
+/** ------------ Node Class */
+
+size_t OrgChart::Node::get_num_childs() {
 
     return 0;
 }
 
 std::ostream &ariel::operator<<(std::ostream &ostream, OrgChart::Node &node) {
-    return <#initializer#>;
+    ostream << node.title << '\n';
+
+    return ostream;
 }
 
-void OrgChart::Node::add_child(const std::string& new_child_title) {
+void OrgChart::Node::add_child(Node *child) {
+
+    this->childs.push_back(child);
 
 }
 
@@ -78,9 +93,7 @@ void OrgChart::Node::set_title(std::string _title) {
 
 }
 
-std::ostream &ariel::operator<<(std::ostream &ostream, OrgChart &node) {
-    return <#initializer#>;
-}
+
 
 
 
@@ -88,9 +101,11 @@ std::ostream &ariel::operator<<(std::ostream &ostream, OrgChart &node) {
 
 
 
-OrgChart::Node &OrgChart::LevelOrder::operator=(OrgChart::Node &) {
+OrgChart::LevelOrder &OrgChart::LevelOrder::operator=(const OrgChart::LevelOrder & levelOrder) {
+    this->pointer_to_current_node = levelOrder.pointer_to_current_node;
 
-    return <#initializer#>;
+
+    return *this;
 }
 
 OrgChart::Node &OrgChart::LevelOrder::operator*() const {
