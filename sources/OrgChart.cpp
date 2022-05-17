@@ -4,18 +4,31 @@
 
 #include "OrgChart.hpp"
 
+#include <utility>
+
 using namespace ariel;
 
-OrgChart &OrgChart::add_root(const std::string title) {
-    return <#initializer#>;
+OrgChart &OrgChart::add_root(const std::string& title) {
+    if (this->root == nullptr) {
+        Node e(title, 0);
+        this->members.insert({title,e});
+    } else {
+        this->root->set_title(title);
+    }
+    return *this;
 }
 
-OrgChart &OrgChart::add_sub(const std::string curr_title, const std::string new_title) {
-    return <#initializer#>;
+OrgChart &OrgChart::add_sub(const std::string& curr_title, const std::string& new_title) {
+
+    this->members.at(curr_title).add_child(new_title);
+}
+
+auto OrgChart::get_members() {
+    return &(this->members);
 }
 
 OrgChart::LevelOrder OrgChart::begin_level_order() {
-    return OrgChart::LevelOrder();
+    return OrgChart::LevelOrder{root};
 }
 
 OrgChart::LevelOrder OrgChart::end_level_order() {
@@ -48,6 +61,7 @@ OrgChart::PreOrder OrgChart::end_preorder() {
 
 /** Node Class */
 int OrgChart::Node::size() {
+
     return 0;
 }
 
@@ -55,11 +69,27 @@ std::ostream &ariel::operator<<(std::ostream &ostream, OrgChart::Node &node) {
     return <#initializer#>;
 }
 
+void OrgChart::Node::add_child(const std::string& new_child_title) {
+
+}
+
+void OrgChart::Node::set_title(std::string _title) {
+    this->title = std::move(_title);
+
+}
+
+std::ostream &ariel::operator<<(std::ostream &ostream, OrgChart &node) {
+    return <#initializer#>;
+}
+
+
+
 /** Level Order Class */
 
 
 
 OrgChart::Node &OrgChart::LevelOrder::operator=(OrgChart::Node &) {
+
     return <#initializer#>;
 }
 

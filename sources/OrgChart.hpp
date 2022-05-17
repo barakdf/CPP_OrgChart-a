@@ -9,6 +9,7 @@
 #include <iterator>
 #include <utility>
 #include <vector>
+#include <unordered_map>
 
 namespace ariel {
     class OrgChart {
@@ -17,25 +18,38 @@ namespace ariel {
         private:
             std::string title;
             Node* parent;
-            std::vector<Node> subs;
+            std::vector<Node*> childs;
             int _size;
+            size_t index;
 
         public:
-            Node(std::string  title, Node& parent):title(std::move(title)), parent(&parent), _size(0) {}
+            Node(std::string  title, size_t _index):title(std::move(title)), parent(nullptr), _size(0), index(_index){}
 
-            friend std::ostream & operator<< (std::ostream &ostream, Node& node);
+            void add_child(const std::string& new_child_title);
+
+            void set_title(std::string _title);
 
             int size();
+
+            friend std::ostream & operator<< (std::ostream &ostream, Node& node);
         };
 
     private:
         Node *root;
+
     public:
+
+
+        std::unordered_map<std::string, Node> members;
         OrgChart() : root(nullptr) {}
 
-        OrgChart &add_root(const std::string title);
+        OrgChart &add_root(const std::string& title);
 
-        OrgChart &add_sub(const std::string curr_title, const std::string new_title);
+        OrgChart &add_sub(const std::string& curr_title, const std::string& new_title);
+
+        auto get_members();
+
+
 
 
         /** Iterator Classes */
@@ -89,6 +103,7 @@ namespace ariel {
         class PreOrder {
         private:
             Node *pointer_to_current_node;
+
         public:
             explicit PreOrder(Node *ptr = nullptr)
                     : pointer_to_current_node(ptr) {}
