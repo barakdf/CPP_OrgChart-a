@@ -57,18 +57,26 @@ namespace ariel {
 
         /** -------------- Iterator Classes */
 
-        /* LEVEL ORDER CLASS */
-        class LevelOrder {
-        private:
+
+        /** Basic Iterator Parent Class */
+
+        class Iterator {
+        protected:
             Node *pointer_to_current_node;
         public:
-            explicit LevelOrder(Node *ptr = nullptr)
-                    : pointer_to_current_node(ptr) {}
+            explicit Iterator(Node *ptr = nullptr): pointer_to_current_node(ptr){}
 
-            LevelOrder &operator=(const LevelOrder &);
+            Iterator &operator=(const Iterator &);
             Node & operator*() const;
-            Node * operator&() const;
+//            Node & operator&() const;
             Node * operator->() const;
+
+        };
+        /* LEVEL ORDER CLASS */
+        class LevelOrder: Iterator {
+        public:
+            explicit LevelOrder(Node *ptr = nullptr)
+                    : Iterator(ptr) {}
 
             LevelOrder& operator++();
             const LevelOrder operator++(int );
@@ -81,18 +89,10 @@ namespace ariel {
 
 
         /* REVERSE LEVEL ORDER CLASS */
-        class ReverseLevelOrder {
-        private:
-            Node *pointer_to_current_node;
-
+        class ReverseLevelOrder:Iterator {
         public:
             explicit ReverseLevelOrder(Node *ptr = nullptr)
-                    : pointer_to_current_node(ptr) {}
-
-            ReverseLevelOrder &operator=(ReverseLevelOrder &);
-            Node & operator*() const;
-            Node * operator&() const;
-            Node * operator->() const;
+                    : Iterator(ptr) {}
 
             ReverseLevelOrder& operator++();
             const ReverseLevelOrder operator++(int );
@@ -103,18 +103,11 @@ namespace ariel {
         };
 
         /* PRE ORDER CLASS */
-        class PreOrder {
-        private:
-            Node *pointer_to_current_node;
+        class PreOrder:Iterator {
 
         public:
             explicit PreOrder(Node *ptr = nullptr)
-                    : pointer_to_current_node(ptr) {}
-
-            PreOrder &operator=(Node &);
-            Node & operator*() const;
-            Node * operator&() const;
-            Node * operator->() const;
+                    : Iterator(ptr) {}
 
             PreOrder& operator++();
             const PreOrder operator++(int );

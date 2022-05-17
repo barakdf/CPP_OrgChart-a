@@ -93,45 +93,103 @@ void OrgChart::Node::set_title(std::string _title) {
 
 }
 
+int OrgChart::Node::size() {
+    return this->title.length();
+}
 
 
+/** Basic Iterator Parent Class */
+
+OrgChart::Iterator &OrgChart::Iterator::operator=(const OrgChart::Iterator &other) = default;
+
+OrgChart::Node &OrgChart::Iterator::operator*() const {
+    return *(this->pointer_to_current_node);
+}
+
+OrgChart::Node *OrgChart::Iterator::operator->() const {
+    return this->pointer_to_current_node;
+}
 
 
 /** Level Order Class */
 
 
 
-OrgChart::LevelOrder &OrgChart::LevelOrder::operator=(const OrgChart::LevelOrder & levelOrder) {
-    this->pointer_to_current_node = levelOrder.pointer_to_current_node;
 
-
-    return *this;
-}
-
-OrgChart::Node &OrgChart::LevelOrder::operator*() const {
-    return <#initializer#>;
-}
-
-OrgChart::Node *OrgChart::LevelOrder::operator&() const {
-    return nullptr;
-}
-
-OrgChart::Node *OrgChart::LevelOrder::operator->() const {
-    return nullptr;
-}
-
-OrgChart::LevelOrder &OrgChart::LevelOrder::operator++() {
-    return <#initializer#>;
-}
-
+/* Prefix */
+//TODO
 const OrgChart::LevelOrder OrgChart::LevelOrder::operator++(int) {
     return OrgChart::LevelOrder();
 }
 
+/* Postfix */
+//TODO
+OrgChart::LevelOrder &OrgChart::LevelOrder::operator++() {
+    return *this;
+}
+
+/* Boolean */
+//TODO
 bool OrgChart::LevelOrder::operator==(const OrgChart::LevelOrder &other) {
     return false;
 }
-
+//TODO
 bool OrgChart::LevelOrder::operator!=(const OrgChart::LevelOrder &other) {
     return false;
 }
+
+/** ReverseLevelOrder */
+
+
+/* Prefix */
+//TODO
+OrgChart::ReverseLevelOrder &OrgChart::ReverseLevelOrder::operator++() {
+    return *this;
+}
+
+/* Postfix */
+//TODO
+const OrgChart::ReverseLevelOrder OrgChart::ReverseLevelOrder::operator++(int) {
+    return OrgChart::ReverseLevelOrder();
+}
+
+
+/* Boolean */
+//TODO
+bool OrgChart::ReverseLevelOrder::operator==(const OrgChart::ReverseLevelOrder &other) {
+    return false;
+}
+//TODO
+bool OrgChart::ReverseLevelOrder::operator!=(const OrgChart::ReverseLevelOrder &other) {
+    return false;
+}
+
+
+
+/** PreOrder */
+
+
+/* Prefix */
+//TODO
+OrgChart::PreOrder &OrgChart::PreOrder::operator++() {
+    return *this;
+}
+
+/* Postfix */
+//TODO
+const OrgChart::PreOrder OrgChart::PreOrder::operator++(int) {
+    return OrgChart::PreOrder();
+}
+
+
+/* Boolean */
+//TODO
+bool OrgChart::PreOrder::operator==(const OrgChart::PreOrder &other) {
+    return false;
+}
+//TODO
+bool OrgChart::PreOrder::operator!=(const OrgChart::PreOrder &other) {
+    return false;
+}
+
+
