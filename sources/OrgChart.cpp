@@ -12,6 +12,7 @@ OrgChart &OrgChart::add_root(const std::string& title) {
     if (this->root == nullptr) {
         Node e(title, 0);
         this->members.insert({title,e});
+        this->root = &(this->members.at(title))    ;
     } else {
         this->root->set_title(title);
     }
@@ -20,6 +21,7 @@ OrgChart &OrgChart::add_root(const std::string& title) {
 
 OrgChart &OrgChart::add_sub(const std::string& curr_title, const std::string& new_title) {
     if (this->members.find(curr_title) == this->members.end()) {
+        throw std::invalid_argument("Parent Not Found\n");
     }
 
     Node *parent = &(members.at(curr_title));
@@ -89,6 +91,10 @@ void OrgChart::Node::add_child(Node *child) {
 
 }
 
+const std::string &OrgChart::Node::_title() {
+    return this->title;
+}
+
 void OrgChart::Node::set_title(std::string _title) {
     this->title = std::move(_title);
 
@@ -101,10 +107,13 @@ int OrgChart::Node::size() {
 
 /** Basic Iterator Parent Class */
 
-//OrgChart::Iterator &OrgChart::Iterator::operator=(const OrgChart::Iterator &other) = default;
+OrgChart::Iterator &OrgChart::Iterator::operator=(const OrgChart::Iterator &other) = default;
 
-OrgChart::Node &OrgChart::Iterator::operator*() const {
-    return *(this->pointer_to_current_node);
+const std::string &OrgChart::Iterator::operator*() const{
+    if (this->pointer_to_current_node == nullptr) {
+        throw std::invalid_argument("NULL PTR");
+    }
+    return (this->pointer_to_current_node)->_title();
 }
 
 OrgChart::Node *OrgChart::Iterator::operator->() const {

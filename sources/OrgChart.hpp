@@ -11,6 +11,9 @@
 #include <vector>
 #include <unordered_map>
 
+/** */
+
+
 namespace ariel {
    class LevelOrder;
    class ReverseLevelOrder;
@@ -20,6 +23,7 @@ namespace ariel {
 
     public:
         friend class LevelOrder;
+        friend class ReverseLevelOrder;
         friend class PreOrder;
         class Node {
         private:
@@ -34,6 +38,8 @@ namespace ariel {
 
             void add_child(Node* child);
 
+            const std::string & _title();
+
             void set_title(std::string _title);
 
             size_t get_num_childs();
@@ -45,7 +51,7 @@ namespace ariel {
 
     private:
         Node *root;
-
+        /* map of members for O(1) search of a member node */
         std::unordered_map<std::string, Node> members;
 
 
@@ -64,7 +70,8 @@ namespace ariel {
         /** -------------- Iterator Classes */
 
 
-        /** Basic Iterator Parent Class */
+        /** Basic Iterator Parent Class
+         * this class will contain all the common implementation of tha sub behave iterators.*/
 
         class Iterator {
         private:
@@ -72,11 +79,11 @@ namespace ariel {
         public:
             Iterator(Node *ptr = nullptr): pointer_to_current_node(ptr){}
 
-//            Iterator &operator=(const Iterator &);
+            Iterator &operator=(const Iterator &);
 
             //            Node & operator&() const;
             Node * operator->() const;
-            Node & operator*() const;
+            const std::string& operator*() const;
 
             bool operator==(const Iterator& other);
             bool operator!=(const Iterator& other);
